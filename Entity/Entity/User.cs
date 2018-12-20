@@ -7,7 +7,7 @@ namespace Entity
         public int UserId { get; set; }
         public string First_Name { get; set; }
         public string Last_Name { get; set; }
-        public List<FinanseOperation> FinanseOperations { get; set; }
+        public ICollection<FinanseOperation> FinanseOperations { get; set; }
 
     }
 }

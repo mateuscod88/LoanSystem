@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Entity
 {
     public class FinanseOperation
@@ -6,5 +8,6 @@ namespace Entity
         public FinanseOperationType OperationType { get; set; }
         public User Owner { get; set; }
         public long Amount { get; set; }
+
     }
 }
