@@ -13,6 +13,9 @@ using Microsoft.Extensions.Options;
 using Entity.Context;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Domain.User.Service;
+using Domain.Lender.Service;
+using Domain.Loan.Service;
 
 namespace WebApi
 {
@@ -29,9 +32,11 @@ namespace WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddEntityFrameworkSqlServer()
-                    .AddDbContext<LoanContext>(options => options.UseSqlServer(Configuration.GetConnectionString("LoanDatabase")))
-                    .BuildServiceProvider();
+            services.AddDbContext<LoanContext>(options => options.UseSqlServer(Configuration.GetConnectionString("LoanDatabase")));
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ILoanService, LoanService>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,7 +51,7 @@ namespace WebApi
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            
             app.UseHttpsRedirection();
             app.UseMvc();
         }

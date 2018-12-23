@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Domain.User.Service;
+using Entity.Context;
+using Domain.User.Model;
+using Microsoft.EntityFrameworkCore;
+using Domain.Helpers;
+using Newtonsoft.Json;
 
 namespace WebApi.Controllers
 {
@@ -10,11 +16,22 @@ namespace WebApi.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        //private IUserService service;
+        private IUserService _userService;
+        public ValuesController(IUserService userService)
+        {
+            
+            _userService = userService;
+            //service = new UserService();
+        }
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var user = _userService.GetAllLoaners().ToList();
+            
+            return new ObjectResult(JsonConvert.SerializeObject(user));
+
         }
 
         // GET api/values/5
