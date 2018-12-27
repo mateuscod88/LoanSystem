@@ -15,12 +15,9 @@ namespace Domain.User.Service
     {
         private LoanContext _context;
 
-        public UserService()
+        public UserService(LoanContext context)
         {
-            var service = new ServiceCollection();
-            service.AddUserServiceLoanDbContext();
-            var provider = service.BuildServiceProvider();
-            _context = provider.GetRequiredService<LoanContext>();
+            _context = context;
         }
         public IQueryable<UserModel> GetAllLoaners()
         {
