@@ -32,7 +32,7 @@ namespace WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            // services.AddDbContext<LoanContext>(options => options.UseSqlServer(Configuration.GetConnectionString("LoanDatabase")));
+            services.AddDbContext<LoanContext>(options => options.UseSqlServer(Configuration.GetConnectionString("LoanDatabase")));
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ILoanService, LoanService>();
 
