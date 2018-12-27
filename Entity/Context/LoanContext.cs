@@ -5,18 +5,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Entity.Context
 {
-    public class LoanContext : DbContext , IDatabaseService
+    public class LoanContext : DbContext, IDatabaseService
     {
-        public LoanContext(DbContextOptions options):base(options)
+        public LoanContext(DbContextOptions options) : base(options)
         {
-            
+
         }
         public LoanContext()
         {
 
         }
         public DbSet<User> Users { get; set; }
-        public DbSet<Loan> Loans{ get; set; }
+        public DbSet<Loan> Loans { get; set; }
         public DbSet<Lender> Lenders { get; set; }
         public void SaveChanges()
         {
@@ -24,7 +24,7 @@ namespace Entity.Context
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=.\SQLEXPRESS;Database=LoanDb;Integrated Security=True");
+            optionsBuilder.UseSqlServer(@"Data Source=WS-9ZV3LC2;Database=LoanDb;Integrated Security=True");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

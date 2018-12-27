@@ -13,7 +13,7 @@ namespace Domain.Helpers
     {
         public static IServiceCollection AddUserServiceLoanDbContext(this IServiceCollection services)
         {
-            services.AddDbContext<LoanContext>(x => x.UseSqlServer(@"Data Source=.\SQLEXPRESS;Database=LoanDb;Integrated Security=True"));
+            services.AddDbContext<LoanContext>();
             return services;
         }
     }

@@ -11,6 +11,7 @@ namespace Domain.User.Service
     {
         IQueryable<UserModel> GetAllLoaners();
         IQueryable<UserModel> GetAllLenders();
+        IQueryable<UserModel> GetUserById(int id);
         IQueryable<UserModelWithOperationType> GetAllLendersAndLoaners();
 
         void AddUser(UserModel user);

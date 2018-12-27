@@ -14,7 +14,7 @@ namespace Domain.User.Service
     public class UserService : IUserService
     {
         private LoanContext _context;
-        
+
         public UserService()
         {
             var service = new ServiceCollection();
@@ -25,7 +25,7 @@ namespace Domain.User.Service
         public IQueryable<UserModel> GetAllLoaners()
         {
             return _context.Loans.AsNoTracking().GroupBy(x => x.UserId).Select(x => new UserModel { Id = x.FirstOrDefault().User.Id, First_Name = x.FirstOrDefault().User.First_Name, Last_Name = x.FirstOrDefault().User.Last_Name });
-            
+
         }
         public IQueryable<UserModel> GetAllLenders()
         {
@@ -33,9 +33,19 @@ namespace Domain.User.Service
         }
         public IQueryable<UserModelWithOperationType> GetAllLendersAndLoaners()
         {
-            var loaners = _context.Loans.AsNoTracking().Select(x => new UserModelWithOperationType { Id = x.User.Id, First_Name = x.User.First_Name, Last_Name = x.User.Last_Name,OperationType = "Loan" });
-            var lenders = _context.Lenders.AsNoTracking().Select(x => new UserModelWithOperationType { Id = x.User.Id, First_Name = x.User.First_Name, Last_Name = x.User.Last_Name,OperationType = "Lender" });
-            return loaners.Concat(lenders); 
+            var loaners = _context.Loans.AsNoTracking().Select(x => new UserModelWithOperationType { Id = x.User.Id, First_Name = x.User.First_Name, Last_Name = x.User.Last_Name, OperationType = "Loan" });
+            var lenders = _context.Lenders.AsNoTracking().Select(x => new UserModelWithOperationType { Id = x.User.Id, First_Name = x.User.First_Name, Last_Name = x.User.Last_Name, OperationType = "Lender" });
+            return loaners.Concat(lenders);
+        }
+        public IQueryable<UserModel> GetUserById(int id)
+        {
+            return _context.Users.Where(x => x.Id == id).Select(y => new UserModel
+            {
+                Id = y.Id,
+                First_Name = y.First_Name,
+                Last_Name = y.Last_Name
+            });
+
         }
 
         public void AddUser(UserModel user)
