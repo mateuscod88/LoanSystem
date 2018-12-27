@@ -48,13 +48,14 @@ namespace Domain.User.Service
 
         }
 
-        public void AddUser(UserModel user)
+        public UserModel AddUser(UserModel user)
         {
             var userEntity = new Entity.Entity.User();
             userEntity.First_Name = user.First_Name;
             userEntity.Last_Name = user.Last_Name;
             _context.Users.Add(userEntity);
             _context.SaveChanges();
+            return new UserModel { Id = userEntity.Id, First_Name = userEntity.First_Name, Last_Name = userEntity.Last_Name };
         }
     }
 }

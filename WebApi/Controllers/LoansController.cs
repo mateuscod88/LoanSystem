@@ -62,7 +62,7 @@ namespace WebApi.Controllers
                 {
                     return BadRequest("Invalid model object");
                 }
-                _userService.AddUser(user);
+                user = _userService.AddUser(user);
                 return CreatedAtRoute("GetUserById", new { id = user.Id }, user);
             }
             catch (Exception e)
