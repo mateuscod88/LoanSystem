@@ -29,6 +29,7 @@ namespace WebApi.Controllers
         public ActionResult<IEnumerable<UserModelWithOperationType>> GetAllLoanersAndLenders()
         {
             var allLoanAndLenders = _userService.GetAllLendersAndLoaners().ToList();
+
             return allLoanAndLenders;
         }
 
@@ -37,6 +38,10 @@ namespace WebApi.Controllers
         public ActionResult<IEnumerable<LoanModel>> GetLoansByUserId(int id)
         {
             var userLoans = _loanService.GetLoanByUserId(id).ToList();
+            if (userLoans == null)
+            {
+                return NotFound();
+            }
             return userLoans;
         }
         // GET: api/Loans/5
@@ -44,6 +49,10 @@ namespace WebApi.Controllers
         public ActionResult<IEnumerable<UserModel>> GetUserById(int id)
         {
             var user = _userService.GetUserById(id).ToList();
+            if (user == null)
+            {
+                return NotFound();
+            }
             return user;
         }
         // POST: api/Loans
@@ -73,15 +82,44 @@ namespace WebApi.Controllers
         }
         [HttpPost]
         [ActionName("AddLoan")]
-        public void AddLoan([FromBody] string value)
+        public ActionResult AddLoan([FromBody] LoanModel loan)
         {
+            try
+            {
+                if (loan == null)
+                {
+                    return BadRequest("User object is null");
+                }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest("Invalid model object");
+                }
+                loan = _loanService.AddLoan(loan);
+                return CreatedAtRoute("GetLoansByUserId", new { id = loan.UserId }, loan);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         // PUT: api/Loans/5
         [HttpPut("{id}")]
         [ActionName("PayBackLoan")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult PayBackLoan(int id, [FromBody] LoanModel loan)
         {
+            if (id != loan.Id)
+            {
+                return BadRequest();
+            }
+            var loanFromContext = _loanService.GetLoanById(loan.Id);
+            if (loanFromContext == null)
+            {
+                return NotFound();
+            }
+            _loanService.PayBackLoanById(loan.Id);
+            return new NoContentResult();
+
         }
 
         // DELETE: api/ApiWithActions/5

@@ -22,12 +22,44 @@ namespace Domain.Loan.Service
         }
         public IQueryable<LoanModel> GetLoanByUserId(int userId)
         {
-           return  _context.Loans.AsNoTracking().Where(x => x.UserId == userId).Select(x => new LoanModel { Id = x.Id, Amount = x.Amount });
+            return _context.Loans.AsNoTracking().Where(x => x.UserId == userId).Select(x => new LoanModel { Id = x.Id, Amount = x.Amount, IsPaid = x.IsPaid, UserId = x.UserId, LenderId = x.LenderId });
         }
         public void PayBackLoanById(int loanId)
         {
+            var loan = _context.Loans.FirstOrDefault(x => x.Id == loanId);
+            if (loan != null)
+            {
+                loan.IsPaid = true;
+                _context.Update(loan);
+                _context.SaveChanges();
+            }
 
         }
+        public LoanModel AddLoan(LoanModel loan)
+        {
+            var loanEntity = new Entity.Entity.Loan();
+            loanEntity.LenderId = loan.LenderId;
+            loanEntity.UserId = loan.UserId;
+            loanEntity.Amount = loan.Amount;
+            loanEntity.IsPaid = loan.IsPaid;
+            _context.Loans.Add(loanEntity);
+            _context.SaveChanges();
+
+            return new LoanModel
+            {
+                Id = loanEntity.Id,
+                Amount = loanEntity.Amount,
+                IsPaid = loanEntity.IsPaid,
+                LenderId = loanEntity.LenderId,
+                UserId = loanEntity.UserId,
+            };
+
+        }
+        public LoanModel GetLoanById(int id)
+        {
+            return _context.Loans.Select(x => new LoanModel { Id = x.Id, Amount = x.Amount, IsPaid = x.IsPaid, LenderId = x.LenderId, UserId = x.UserId }).FirstOrDefault(y => y.Id == id);
+        }
+
 
     }
 }

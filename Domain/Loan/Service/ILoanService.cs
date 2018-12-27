@@ -10,5 +10,8 @@ namespace Domain.Loan.Service
     {
         IQueryable<LoanModel> GetLoanByUserId(int userId);
         void PayBackLoanById(int loanId);
+        LoanModel AddLoan(LoanModel loan);
+        LoanModel GetLoanById(int id);
+
     }
 }
