@@ -86,7 +86,7 @@ namespace WebApi.Controllers
             {
                 if (loan == null)
                 {
-                    return BadRequest("User object is null");
+                    return BadRequest("Loan object is null");
                 }
                 if (!ModelState.IsValid)
                 {
