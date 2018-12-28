@@ -1,5 +1,4 @@
-﻿using Domain.Helpers;
-using Domain.Loan.Model;
+﻿using Domain.Loan.Model;
 using Entity.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,7 +18,7 @@ namespace Domain.Loan.Service
         }
         public IQueryable<LoanModel> GetLoanByUserId(int userId)
         {
-            return _context.Loans.AsNoTracking().Where(x => x.UserId == userId).Select(x => new LoanModel { Id = x.Id, Amount = x.Amount, IsPaid = x.IsPaid, UserId = x.UserId, LenderId = x.LenderId });
+            return _context.Loans.AsNoTracking().Where(x => x.UserId == userId).Select(x => new LoanModel { Id = x.Id, Amount = x.Amount, IsPaid = x.IsPaid, UserId = x.UserId, User = new User.Model.UserModel { Id = x.User.Id, First_Name = x.User.First_Name, Last_Name = x.User.Last_Name }, LenderId = x.LenderId, Lender = new Lender.Model.LenderModel { Id = x.Lender.Id, User = new User.Model.UserModel { Id = x.Lender.User.Id, First_Name = x.Lender.User.First_Name, Last_Name = x.Lender.User.Last_Name }, UserId = x.Lender.UserId } });
         }
         public void PayBackLoanById(int loanId)
         {

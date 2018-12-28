@@ -56,8 +56,7 @@ namespace WebApi.Controllers
             return user;
         }
         // POST: api/Loans
-        [HttpPost]
-        [ActionName("AddUser")]
+        [HttpPost(Name = "AddUser")]
         public IActionResult AddUser([FromBody] UserModel user)
         {
             try
@@ -80,8 +79,7 @@ namespace WebApi.Controllers
             }
 
         }
-        [HttpPost]
-        [ActionName("AddLoan")]
+        [HttpPost(Name = "AddLoan")]
         public ActionResult AddLoan([FromBody] LoanModel loan)
         {
             try
@@ -104,8 +102,7 @@ namespace WebApi.Controllers
         }
 
         // PUT: api/Loans/5
-        [HttpPut("{id}")]
-        [ActionName("PayBackLoan")]
+        [HttpPut("{id}", Name = "PayBackLoan")]
         public ActionResult PayBackLoan(int id, [FromBody] LoanModel loan)
         {
             if (id != loan.Id)
