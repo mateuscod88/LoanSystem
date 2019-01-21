@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Entity.Context;
+using Entity.Entity;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Domain.User.Service;
@@ -33,6 +34,12 @@ namespace WebApi
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<LoanContext>(options => options.UseSqlServer(Configuration.GetConnectionString("LoanDatabase")));
+            services.AddDbContext<AplicationContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AplicationDatabase")));
+
+            services.AddIdentity<AplicationUser, IdentityRole>()
+                    .AddEntityFrameworkStores<AplicationContext>()
+                    .AddDefaultTokenProviders();
+
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ILoanService, LoanService>();
 
