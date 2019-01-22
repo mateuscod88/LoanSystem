@@ -2,6 +2,7 @@ using Entity.Entity;
 using Entity.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Entity.Seed;
 
 namespace Entity.Context
 {

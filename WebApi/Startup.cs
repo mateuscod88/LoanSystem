@@ -17,6 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using Domain.User.Service;
 using Domain.Lender.Service;
 using Domain.Loan.Service;
+using Domain.SeedData;
 
 namespace WebApi
 {
@@ -58,7 +59,7 @@ namespace WebApi
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            SeedData.Initialize(app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope().ServiceProvider);
             app.UseHttpsRedirection();
             app.UseMvc();
         }
