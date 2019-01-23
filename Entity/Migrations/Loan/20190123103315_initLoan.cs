@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Entity.Migrations
+namespace Entity.Migrations.Loan
 {
-    public partial class CreateLoanDb : Migration
+    public partial class initLoan : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

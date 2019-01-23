@@ -11,12 +11,20 @@ namespace Entity.Context
         {
 
         }
+        public LoanContext()
+        {
+
+        }
         public DbSet<User> Users { get; set; }
         public DbSet<Loan> Loans { get; set; }
         public DbSet<Lender> Lenders { get; set; }
         public void SaveChanges()
         {
             base.SaveChanges();
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Data Source=WS-9ZV3LC2;Database=LoanDb;Integrated Security=True");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

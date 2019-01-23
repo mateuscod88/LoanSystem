@@ -12,6 +12,14 @@ namespace Entity.Context
         {
 
         }
+        public AplicationContext()
+        {
+
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Data Source=WS-9ZV3LC2;Database=AplicationDb;Integrated Security=True");
+        }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

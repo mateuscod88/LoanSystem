@@ -17,6 +17,8 @@ using Microsoft.EntityFrameworkCore;
 using Domain.User.Service;
 using Domain.Lender.Service;
 using Domain.Loan.Service;
+using Entity;
+using Microsoft.AspNetCore.Identity;
 using Domain.SeedData;
 
 namespace WebApi
