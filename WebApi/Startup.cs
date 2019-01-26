@@ -20,6 +20,7 @@ using Domain.Loan.Service;
 using Entity;
 using Microsoft.AspNetCore.Identity;
 using Domain.SeedData;
+using Domain.AppUser.Service;
 
 namespace WebApi
 {
@@ -39,12 +40,23 @@ namespace WebApi
             services.AddDbContext<LoanContext>(options => options.UseSqlServer(Configuration.GetConnectionString("LoanDatabase")));
             services.AddDbContext<AplicationContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AplicationDatabase")));
 
-            services.AddIdentity<AplicationUser, IdentityRole>()
+            services.AddIdentity<AplicationUser, IdentityRole>(
+                options =>
+                {
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequiredLength = 6;
+                    options.Password.RequireNonAlphanumeric = false;
+
+                }
+            )
                     .AddEntityFrameworkStores<AplicationContext>()
                     .AddDefaultTokenProviders();
 
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ILoanService, LoanService>();
+            // services.AddTransient<IAplicationUserService, AplicationUserService>();
 
 
         }
@@ -62,6 +74,7 @@ namespace WebApi
                 app.UseHsts();
             }
             SeedData.Initialize(app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope().ServiceProvider);
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
         }

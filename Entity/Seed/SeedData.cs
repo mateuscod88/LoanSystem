@@ -21,7 +21,7 @@ namespace Entity.Seed
                     SecurityStamp = Guid.NewGuid().ToString(),
                     UserName = "mateuscod"
                 };
-                userManager.CreateAsync(user, "qwerty123");
+                userManager.CreateAsync(user, "Qweqwerty@123");
             }
         }
     }

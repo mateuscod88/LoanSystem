@@ -7,7 +7,7 @@ namespace Entity.Context
 {
     public class LoanContext : DbContext, IDatabaseService
     {
-        public LoanContext(DbContextOptions options) : base(options)
+        public LoanContext(DbContextOptions<LoanContext> options) : base(options)
         {
 
         }
