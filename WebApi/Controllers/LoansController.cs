@@ -7,12 +7,14 @@ using Domain.Loan.Model;
 using Domain.Loan.Service;
 using Domain.User.Model;
 using Domain.User.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace WebApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class LoansController : ControllerBase
