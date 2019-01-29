@@ -20,7 +20,7 @@ namespace WebApi.Controllers
         public async Task<IActionResult> Login([FromBody] AplicationUserModel aplicationUserModel)
         {
             var applicationUser = await _userManager.FindByNameAsync(aplicationUserModel.Login);
-            var isCorrect = await _userManager.CheckPasswordAsync(applicationUser, @"Qweqwerty@123");
+            var isCorrect = await _userManager.CheckPasswordAsync(applicationUser, aplicationUserModel.Password);
             if (isCorrect)
             {
                 return new ObjectResult("token");
