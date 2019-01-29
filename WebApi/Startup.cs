@@ -21,6 +21,9 @@ using Entity;
 using Microsoft.AspNetCore.Identity;
 using Domain.SeedData;
 using Domain.AppUser.Service;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace WebApi
 {
@@ -53,7 +56,25 @@ namespace WebApi
             )
                     .AddEntityFrameworkStores<AplicationContext>()
                     .AddDefaultTokenProviders();
-
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.SaveToken = true;
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidAudience = "http://oec.com",
+                    ValidIssuer = "http://oec.com",
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SuperSecureKeyKey"))
+                };
+            });
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ILoanService, LoanService>();
             // services.AddTransient<IAplicationUserService, AplicationUserService>();
